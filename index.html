@@ -60,6 +60,31 @@
 <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
+ function timestamp() {
+	 console.log('timestamp');
+	 var response = document.getElementById("g-recaptcha-response"); 
+	 var submitButton = document.getElementById("submit-button");
+	 if (response == null || response.value.trim() == "") {
+		 var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);
+		 elems["ts"] = JSON.stringify(new Date().getTime());
+		 document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); 
+		 submitButton.disabled = true;
+	 } 
+} 
+setInterval(timestamp, 500); 
+	function enableSubmitButton() {
+            var submitButton = document.getElementById("submit-button");
+            var captchaResponse = document.getElementById("g-recaptcha-response");
+		console.log('captchaRespons e'+captchaResponse);
+            // Enable submit button if reCAPTCHA is completed
+            submitButton.disabled = false;
+        }
+	function onCaptchaCompleted() {
+		console.log('captcha clicked');
+            enableSubmitButton();
+        }
+</script>
+<script>
  function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
 </script>
 
@@ -99,7 +124,7 @@
 Message:<textarea  id="00NPP000002NJX3" name="00NPP000002NJX3" rows="4" type="text" wrap="soft"></textarea><br>
 
 <div class="g-recaptcha" data-sitekey="6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw"></div><br>
-<input type="submit" name="submit">
+<input type="submit" name="submit" disabled>   
 
 </form>
  
