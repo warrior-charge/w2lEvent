@@ -65,24 +65,19 @@
 	 var response = document.getElementById("g-recaptcha-response"); 
 	 var submitButton = document.getElementById("submit-button");
 	 console.log('response ',response);
-	 if (response == null || response.value.trim() == "") {
+	 if (response == null || response.value.trim() == ""){
+		submitButton.disabled = false;
+	 } else{
 		 var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);
 		 elems["ts"] = JSON.stringify(new Date().getTime());
 		 document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); 
 		 submitButton.disabled = true;
 	 } 
 } 
-setInterval(timestamp, 500); 
-	function enableSubmitButton() {
-            var submitButton = document.getElementById("submit-button");
-            var captchaResponse = document.getElementById("g-recaptcha-response");
-		console.log('captchaRespons e'+captchaResponse);
-            // Enable submit button if reCAPTCHA is completed
-            submitButton.disabled = false;
-        }
+setInterval(timestamp, 1000); 
 	function onCaptchaCompleted() {
-		console.log('captcha clicked');
-            enableSubmitButton();
+	    console.log('captcha clicked');
+            submitButton.disabled = false;
         }
 </script>
 <script>
