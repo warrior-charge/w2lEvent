@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event LEAD</title>
+    <title>Partial Event Lead</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -61,14 +61,18 @@
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
  function timestamp() { 
-	 var response = document.getElementById("g-recaptcha-response");
-	 if (response == null || response.value.trim() == "") {
-		 var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);
-		 elems["ts"] = JSON.stringify(new Date().getTime());
-		 document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems);
-	 } 
+    var response = document.getElementById("g-recaptcha-response");
+    var submitButton = document.getElementById("submit-button");
+    if (response && response.value.trim() !== "") {
+        // CAPTCHA is completed
+        submitButton.disabled = false;
+    } else {
+	var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);
+	elems["ts"] = JSON.stringify(new Date().getTime());
+	document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems);
+    } 
  } 
-	setInterval(timestamp, 500); 
+setInterval(timestamp, 500); 
 </script>
 
 <!--  ----------------------------------------------------------------------  -->
@@ -107,32 +111,13 @@
 
 Message:<textarea  id="00NPP000002NJX3" name="00NPP000002NJX3" rows="4" type="text" wrap="soft"></textarea><br>
 
-<label for="lead_source">Lead Source</label><select  id="lead_source" name="lead_source"><option value="">--None--</option><option value="Advertisement">Advertisement</option>
-<option value="Customer Event">Customer Event</option>
-<option value="Customer Success">Customer Success</option>
-<option value="Employee Referral">Employee Referral</option>
-<option value="External Referral">External Referral</option>
-<option value="Franchise Ventures">Franchise Ventures</option>
-<option value="Google AdWords">Google AdWords</option>
-<option value="LinkedIn">LinkedIn</option>
-<option value="MyQR Generator">MyQR Generator</option>
-<option value="Other">Other</option>
-<option value="Partner">Partner</option>
-<option value="Purchased List">Purchased List</option>
-<option value="Trade Show">Trade Show</option>
-<option value="Webinar">Webinar</option>
-<option value="Website">Website</option>
-<option value="Email Blast #1">Email Blast #1</option>
-<option value="Website - Enterprise Sales">Website - Enterprise Sales</option>
-<option value="Website - Events">Website - Events</option>
-<option value="At Booth">At Booth</option>
-<option value="Hunted">Hunted</option>
-<option value="Apollo">Apollo</option>
-<option value="Did Not Meet (From App)">Did Not Meet (From App)</option>
+<label for="lead_source">Lead Source</label>
+<select  id="lead_source" name="lead_source">
+<option value="Website" selected>Website</option>
 </select><br>
 
 <div class="g-recaptcha" data-sitekey="6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw"></div><br>
-<input type="submit" name="submit">
+<input type="submit" name="submit"  id="submit-button" disabled>  
 
 </form>
 </body>
