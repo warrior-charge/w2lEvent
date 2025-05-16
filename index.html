@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L</title>
+    <title>Partial Event W2L New</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -87,8 +87,7 @@ setInterval(timestamp, 500);
 <input type=hidden name="retURL" value="https://www.chargefuze.com/">
 <input type=hidden id="recordType" name="recordtypeid" value="012Dn000000vQWSIA2"> 
 <input type=hidden  name="Lead_Category__c" value="Events"> 
-<input type=hidden  name="Lead_Source_Type__c" value="Inbound"> 
-<input type=hidden  name="lead_source" value="Website"> 
+<input type=hidden  name="Lead_Source_Type__c" value="Inbound">  
 <!--  ----------------------------------------------------------------------  -->
 <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
 <!--  these lines if you wish to test in debug mode.                          -->
@@ -111,7 +110,10 @@ setInterval(timestamp, 500);
 
 Message:<textarea  id="00NPP000002NJX3" name="00NPP000002NJX3" rows="4" type="text" wrap="soft"></textarea><br>
  
-
+<select id="lead_source" name="lead_source" style="display: none;">
+<option value="Website" selected>Website</option>
+</select><br>
+	
 <div class="g-recaptcha" data-sitekey="6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw"></div><br>
 <input type="submit" name="submit"  id="submit-button" disabled>  
 
