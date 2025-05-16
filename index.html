@@ -64,8 +64,8 @@
 	  
 	 var response = document.getElementById("g-recaptcha-response"); 
 	 var submitButton = document.getElementById("submit-button");
-	 console.log('response ',response);
-	 if (response !== null || response.value.trim() !== ""){
+	 console.log('response1 ',response);
+	 if (response && response.value.trim() !== "") {
 		 console.log('captcha clickedtimestamp');
 		submitButton.disabled = false;
 	 } else{
@@ -80,9 +80,6 @@ setInterval(timestamp, 3000);
 	    console.log('captcha clicked');
             submitButton.disabled = false;
         }
-</script>
-<script>
- function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
 </script>
 
 <!--  ----------------------------------------------------------------------  -->
