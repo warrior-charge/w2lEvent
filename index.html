@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L New With Date</title>
+    <title>Partial Event W2L New </title>
 	 <style>
         body {
             font-family: Roboto;
@@ -75,7 +75,10 @@
 setInterval(timestamp, 500); 
 
  flatpickr("#00NDn00000uFndI", {
-    dateFormat: "n/j/Y" 
+     dateFormat: "n/j/Y", // Matches M/dd/yyyy format
+    allowInput: true,    // Allows both typing and using the picker
+    altInput: true,      // Adds a human-friendly formatted input field
+    altFormat: "n/j/Y"   // Format shown in the alt field
   });
 </script>
 
@@ -114,7 +117,7 @@ setInterval(timestamp, 500);
 
 Event Name<input  id="00NO900000I9TA5" maxlength="255" name="00NO900000I9TA5" size="20" type="text" /><br>
 
-Event Start Date<input  id="00NDn00000uFndI" name="Event_Start_Date__c" size="20" type="text" /><br>
+Event Start Date<input  id="00NDn00000uFndI" name="Event_Start_Date__c" size="20" type="text"  placeholder="M/dd/yyyy"  /><br>
 
 Message<textarea  id="00NPP000002NJX3" name="00NPP000002NJX3" rows="4" type="text" wrap="soft"></textarea><br>
  
