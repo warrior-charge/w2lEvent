@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L New DateChange </title>
+    <title>Partial Event W2L New Date Change </title>
 	 <style>
         body {
             font-family: Roboto;
@@ -58,10 +58,10 @@
 <!--  ----------------------------------------------------------------------  -->
 
 <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
-<script src="https://www.google.com/recaptcha/api.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<!-- Include flatpickr JS -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://www.google.com/recaptcha/api.js"></script> 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>	
 <script>
  function timestamp() { 
     var response = document.getElementById("g-recaptcha-response");
@@ -77,11 +77,10 @@
  } 
 setInterval(timestamp, 500); 
 
- flatpickr("#00NDn00000uFndI", {
-     dateFormat: "n/j/Y", // Matches M/dd/yyyy format
-    allowInput: true,    // Allows both typing and using the picker
-    altInput: true,      // Adds a human-friendly formatted input field
-    altFormat: "n/j/Y"   // Format shown in the alt field
+$(function() {
+    $("#00NDn00000uFndI").datepicker({
+      dateFormat: "m/dd/yy" // Custom format: M/dd/yyyy
+    });
   });
 </script>
 
