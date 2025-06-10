@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L New Date Change </title>
+    <title>Partial Event W2L  with Captcha </title>
 	 <style>
         body {
             font-family: Roboto;
@@ -75,7 +75,10 @@
 	document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems);
     } 
  } 
-setInterval(timestamp, 500); 
+document.addEventListener("DOMContentLoaded", () => {
+  setInterval(timestamp, 500); 
+});
+
 
 $(function() {
     $("#00NDn00000uFndI").datepicker({
