@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha12</title>
+    <title>Partial Event W2L  with Async Captcha13</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -119,6 +119,21 @@
         e.preventDefault();
         alert("Please complete the reCAPTCHA before submitting the form.");
         console.error("Form blocked: No reCAPTCHA token found.");
+      }
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+	  console.log('submitAction');
+    const form = document.getElementById("event-form");
+
+    form.addEventListener("submit", function (e) { 
+
+      const formData = new FormData(form);
+      console.log("Form submission data:");
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
       }
     });
   });
