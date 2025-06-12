@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha4</title>
+    <title>Partial Event W2L  with Async Captcha5</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -74,13 +74,15 @@ function onRecaptchaSuccess(token) {
 	  document.getElementById("event-inbound").appendChild(responseField);
     }
 
-    // Render the reCAPTCHA explicitly
-    function onRecaptchaLoadCallback() {
-      grecaptcha.render(document.getElementById('recaptcha-container'), {
-        sitekey: '6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw',
+   // Wait for DOM to be fully loaded before rendering reCAPTCHA
+  document.addEventListener("DOMContentLoaded", function () {
+    window.onRecaptchaLoadCallback = function () {
+      grecaptcha.render("recaptcha-container", {
+        sitekey: "6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw",
         callback: onRecaptchaSuccess
       });
-   }
+    };
+  });
 
 
 $(function() {
