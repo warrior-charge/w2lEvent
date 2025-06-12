@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha3</title>
+    <title>Partial Event W2L  with Async Captcha4</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -67,6 +67,11 @@
 function onRecaptchaSuccess(token) {
       var submitButton = document.getElementById("event-submit-button");
       submitButton.disabled = false;
+	  let responseField = document.createElement("input");
+  responseField.setAttribute("type", "hidden");
+  responseField.setAttribute("name", "g-recaptcha-response");
+  responseField.setAttribute("value", token);
+  document.getElementById("event-inbound").appendChild(responseField);
     }
 
     // Render the reCAPTCHA explicitly
