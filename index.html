@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha6</title>
+    <title>Partial Event W2L  with Async Captcha7</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -58,13 +58,13 @@
 <!--  ----------------------------------------------------------------------  -->
 
 <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
-<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoadCallback&render=explicit" async defer></script>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>	
 <script>
-let recaptchaWidgetId;
+  let recaptchaWidgetId;
 
   function onRecaptchaSuccess(token) {
     const form = document.querySelector("form");
@@ -83,39 +83,22 @@ let recaptchaWidgetId;
     }
   }
 
-  function renderRecaptcha() {
-    if (typeof grecaptcha !== "undefined" && grecaptcha.render) {
-      recaptchaWidgetId = grecaptcha.render("recaptcha-container", {
-        sitekey: "6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw",
-        callback: onRecaptchaSuccess
-      });
-    } else {
-      console.error("grecaptcha is not defined");
-    }
-  }
+  // ✅ THIS is the function Google reCAPTCHA looks for on load
+  window.onRecaptchaLoadCallback = function () {
+    recaptchaWidgetId = grecaptcha.render("recaptcha-container", {
+      sitekey: "6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw",
+      callback: onRecaptchaSuccess
+    });
+  };
 
+  // Wait for DOM and init jQuery UI
   document.addEventListener("DOMContentLoaded", function () {
-    // Wait and retry for grecaptcha to become available
-    function waitForRecaptcha(attemptsLeft = 10) {
-      if (typeof grecaptcha !== "undefined" && grecaptcha.render) {
-        renderRecaptcha();
-      } else if (attemptsLeft > 0) {
-        setTimeout(() => waitForRecaptcha(attemptsLeft - 1), 500);
-      } else {
-        console.error("Failed to load reCAPTCHA after several attempts");
-      }
-    }
-
-    waitForRecaptcha();
-
-
-$(function() {
     $("#00NDn00000uFndI").datepicker({
-      dateFormat: "m/dd/yy" // Custom format: M/dd/yyyy
+      dateFormat: "m/dd/yy"
     });
   });
 </script>
-
+<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoadCallback&render=explicit" async defer></script>
 <!--  ----------------------------------------------------------------------  -->
 <!--  NOTE: Please add the following <FORM> element to your page.             -->
 <!--  ----------------------------------------------------------------------  -->
