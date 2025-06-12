@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha11</title>
+    <title>Partial Event W2L  with Async Captcha12</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -95,7 +95,10 @@
     }
     console.log("before activating", existingInput);
     // Enable submit
-    document.getElementById("event-submit-button").disabled = false;
+   setTimeout(() => {
+	    document.getElementById("event-submit-button").disabled = false;
+	  }, 500);
+    //document.getElementById("event-submit-button").disabled = false;
   }
 
   // Renders the reCAPTCHA
