@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Captcha </title>
+    <title>Partial Event W2L  with Async Captcha</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -58,26 +58,24 @@
 <!--  ----------------------------------------------------------------------  -->
 
 <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
-<script src="https://www.google.com/recaptcha/api.js"></script> 
+<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoadCallback&render=explicit" async defer></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>	
 <script>
- function timestamp() { 
-    var response = document.getElementById("g-recaptcha-response");
-    var submitButton = document.getElementById("submit-button");
-    if (response && response.value.trim() !== "") {
-        // CAPTCHA is completed
-        submitButton.disabled = false;
-    } else {
-	var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);
-	elems["ts"] = JSON.stringify(new Date().getTime());
-	document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems);
-    } 
- } 
-document.addEventListener("DOMContentLoaded", () => {
-  setInterval(timestamp, 500); 
-});
+function onRecaptchaSuccess(token) {
+      var submitButton = document.getElementById("event-submit-button");
+      submitButton.disabled = false;
+    }
+
+    // Render the reCAPTCHA explicitly
+    function onRecaptchaLoadCallback() {
+      grecaptcha.render(document.getElementById('recaptcha-container'), {
+        sitekey: '6LevmPAqAAAAAJMooIf2G3Vl5h22S-n3lXlRXx8W',
+        callback: onRecaptchaSuccess
+      });
+   }
 
 
 $(function() {
@@ -130,7 +128,7 @@ Message<textarea  id="00NPP000002NJX3" name="00NPP000002NJX3" rows="4" type="tex
 <option value="Website" selected>Website</option>
 </select><br>
 	
-<div class="g-recaptcha" data-sitekey="6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw"></div><br>
+<div id="recaptcha-container" class="g-recaptcha"></div>
 <input type="submit" name="submit"  id="submit-button" disabled>  
 
 </form>
