@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha7</title>
+    <title>Partial Event W2L  with Async Captcha8</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -63,38 +63,56 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>	
-<script>
-  let recaptchaWidgetId;
-
-  function onRecaptchaSuccess(token) {
-    const form = document.querySelector("form");
-    const submitButton = document.getElementById("event-submit-button");
-    submitButton.disabled = false;
-
-    let existingInput = document.querySelector("input[name='g-recaptcha-response']");
-    if (existingInput) {
-      existingInput.value = token;
-    } else {
-      const responseField = document.createElement("input");
-      responseField.setAttribute("type", "hidden");
-      responseField.setAttribute("name", "g-recaptcha-response");
-      responseField.setAttribute("value", token);
-      form.appendChild(responseField);
-    }
-  }
-
-  // ✅ THIS is the function Google reCAPTCHA looks for on load
-  window.onRecaptchaLoadCallback = function () {
-    recaptchaWidgetId = grecaptcha.render("recaptcha-container", {
-      sitekey: "6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw",
-      callback: onRecaptchaSuccess
-    });
-  };
-
-  // Wait for DOM and init jQuery UI
+<script>   
   document.addEventListener("DOMContentLoaded", function () {
     $("#00NDn00000uFndI").datepicker({
       dateFormat: "m/dd/yy"
+    });
+  });
+</script>
+<script>
+  let recaptchaToken = "";
+
+  // Called by reCAPTCHA when the user passes the challenge
+  function onRecaptchaSuccess(token) {
+    recaptchaToken = token;
+    console.log("reCAPTCHA success. Token:", token);
+
+    // Check if input exists already
+    let existingInput = document.querySelector("input[name='g-recaptcha-response']");
+    if (!existingInput) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "g-recaptcha-response";
+      input.value = token;
+      document.getElementById("event-form").appendChild(input);
+    } else {
+      existingInput.value = token;
+    }
+
+    // Enable submit
+    document.getElementById("event-submit-button").disabled = false;
+  }
+
+  // Renders the reCAPTCHA
+  function onRecaptchaLoadCallback() {
+    grecaptcha.render("recaptcha-container", {
+      sitekey: "6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw",
+      callback: onRecaptchaSuccess
+    });
+  }
+
+  // Final check before submit
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("event-form");
+
+    form.addEventListener("submit", function (e) {
+      const tokenField = document.querySelector("input[name='g-recaptcha-response']");
+      if (!tokenField || tokenField.value.trim() === "") {
+        e.preventDefault();
+        alert("Please complete the reCAPTCHA before submitting the form.");
+        console.error("Form blocked: No reCAPTCHA token found.");
+      }
     });
   });
 </script>
@@ -105,20 +123,12 @@
 
 
 <form action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DO9000007wKVN" method="POST">
-
-<input type=hidden name='captcha_settings' value='{"keyname":"personalKeys","fallback":"true","orgId":"00DO9000007wKVN","ts":""}'>
+ 
 <input type=hidden name="oid" value="00DO9000007wKVN">
 <input type=hidden name="retURL" value="https://www.chargefuze.com/">
 <input type=hidden id="recordType" name="recordType" value="012Dn000000vQWSIA2"> 
 <input type=hidden  name="Lead_Category__c" value="Events"> 
-<input type=hidden  name="Lead_Source_Type__c" value="Inbound">  
-<!--  ----------------------------------------------------------------------  -->
-<!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
-<!--  these lines if you wish to test in debug mode.                          -->
-<!--  <input type="hidden" name="debug" value=1>                              -->
-<!--  <input type="hidden" name="debugEmail"                                  -->
-<!--  value="guerrerocesarw22@gmail.com">                                     -->
-<!--  ----------------------------------------------------------------------  -->
+<input type=hidden  name="Lead_Source_Type__c" value="Inbound">   
 
 <label for="first_name">First Name</label><input  id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br>
 
