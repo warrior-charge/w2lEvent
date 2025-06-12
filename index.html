@@ -68,10 +68,10 @@ function onRecaptchaSuccess(token) {
       var submitButton = document.getElementById("event-submit-button");
       submitButton.disabled = false;
 	  let responseField = document.createElement("input");
-  responseField.setAttribute("type", "hidden");
-  responseField.setAttribute("name", "g-recaptcha-response");
-  responseField.setAttribute("value", token);
-  document.getElementById("event-inbound").appendChild(responseField);
+	  responseField.setAttribute("type", "hidden");
+	  responseField.setAttribute("name", "g-recaptcha-response");
+	  responseField.setAttribute("value", token);
+	  document.getElementById("event-inbound").appendChild(responseField);
     }
 
     // Render the reCAPTCHA explicitly
