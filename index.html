@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha5</title>
+    <title>Partial Event W2L  with Async Captcha6</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -64,25 +64,49 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>	
 <script>
-function onRecaptchaSuccess(token) {
-      var submitButton = document.getElementById("event-submit-button");
-      submitButton.disabled = false;
-	  let responseField = document.createElement("input");
-	  responseField.setAttribute("type", "hidden");
-	  responseField.setAttribute("name", "g-recaptcha-response");
-	  responseField.setAttribute("value", token);
-	  document.getElementById("event-inbound").appendChild(responseField);
-    }
+let recaptchaWidgetId;
 
-   // Wait for DOM to be fully loaded before rendering reCAPTCHA
-  document.addEventListener("DOMContentLoaded", function () {
-    window.onRecaptchaLoadCallback = function () {
-      grecaptcha.render("recaptcha-container", {
+  function onRecaptchaSuccess(token) {
+    const form = document.querySelector("form");
+    const submitButton = document.getElementById("event-submit-button");
+    submitButton.disabled = false;
+
+    let existingInput = document.querySelector("input[name='g-recaptcha-response']");
+    if (existingInput) {
+      existingInput.value = token;
+    } else {
+      const responseField = document.createElement("input");
+      responseField.setAttribute("type", "hidden");
+      responseField.setAttribute("name", "g-recaptcha-response");
+      responseField.setAttribute("value", token);
+      form.appendChild(responseField);
+    }
+  }
+
+  function renderRecaptcha() {
+    if (typeof grecaptcha !== "undefined" && grecaptcha.render) {
+      recaptchaWidgetId = grecaptcha.render("recaptcha-container", {
         sitekey: "6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw",
         callback: onRecaptchaSuccess
       });
-    };
-  });
+    } else {
+      console.error("grecaptcha is not defined");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Wait and retry for grecaptcha to become available
+    function waitForRecaptcha(attemptsLeft = 10) {
+      if (typeof grecaptcha !== "undefined" && grecaptcha.render) {
+        renderRecaptcha();
+      } else if (attemptsLeft > 0) {
+        setTimeout(() => waitForRecaptcha(attemptsLeft - 1), 500);
+      } else {
+        console.error("Failed to load reCAPTCHA after several attempts");
+      }
+    }
+
+    waitForRecaptcha();
 
 
 $(function() {
