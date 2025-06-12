@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha9</title>
+    <title>Partial Event W2L  with Async Captcha11</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -80,13 +80,17 @@
 
     // Check if input exists already
     let existingInput = document.querySelector("input[name='g-recaptcha-response']");
+    console.log("after input check" );
     if (!existingInput) {
+      console.log("input doesn't exist" );
       const input = document.createElement("input");
       input.type = "hidden";
       input.name = "g-recaptcha-response";
       input.value = token;
       document.getElementById("event-form").appendChild(input);
+	console.log("input complete" );    
     } else {
+	    console.log("input exist" );
       existingInput.value = token;
     }
     console.log("before activating", existingInput);
@@ -122,8 +126,8 @@
 <!--  ----------------------------------------------------------------------  -->
 
 
-<form action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DO9000007wKVN" method="POST">
- 
+<form  id="event-form"  action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DO9000007wKVN" method="POST">
+ <input type=hidden name='captcha_settings' value='{"keyname":"personalKeys","fallback":"true","orgId":"00DO9000007wKVN","ts":""}'>
 <input type=hidden name="oid" value="00DO9000007wKVN">
 <input type=hidden name="retURL" value="https://www.chargefuze.com/">
 <input type=hidden id="recordType" name="recordType" value="012Dn000000vQWSIA2"> 
