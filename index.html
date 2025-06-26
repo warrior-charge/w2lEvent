@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partial Event W2L  with Async Captcha14</title>
+    <title>Partial Event W2L  with Normal Captcha</title>
 	 <style>
         body {
             font-family: Roboto;
@@ -70,75 +70,24 @@
     });
   });
 </script>
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
-  let recaptchaToken = "";
-
-  // Called by reCAPTCHA when the user passes the challenge
-  function onRecaptchaSuccess(token) {
-    recaptchaToken = token;
-    console.log("reCAPTCHA success. Token:", token);
-
-    // Check if input exists already
-    let existingInput = document.querySelector("input[name='g-recaptcha-response']");
-    console.log("after input check" );
-    if (!existingInput) {
-      console.log("input doesn't exist" );
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "g-recaptcha-response";
-      input.value = token;
-      document.getElementById("event-form").appendChild(input);
-	console.log("input complete" );    
+ function timestamp() { 
+    var response = document.getElementById("g-recaptcha-response");
+    var submitButton = document.getElementById("submit-button");
+    if (response && response.value.trim() !== "") {
+        // CAPTCHA is completed
+        submitButton.disabled = false;
     } else {
-	    console.log("input exist" );
-      existingInput.value = token;
-    }
-    console.log("before activating", existingInput);
-    // Enable submit
-   setTimeout(() => {
-	    document.getElementById("event-submit-button").disabled = false;
-	  }, 500);
-    //document.getElementById("event-submit-button").disabled = false;
-  }
-
-  // Renders the reCAPTCHA
-  function onRecaptchaLoadCallback() {
-    grecaptcha.render("recaptcha-container", {
-      sitekey: "6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw",
-      callback: onRecaptchaSuccess
-    });
-  }
-
-  // Final check before submit
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("event-form");
-
-    form.addEventListener("submit", function (e) {
-      const tokenField = document.querySelector("input[name='g-recaptcha-response']");
-      if (!tokenField || tokenField.value.trim() === "") {
-        e.preventDefault();
-        alert("Please complete the reCAPTCHA before submitting the form.");
-        console.error("Form blocked: No reCAPTCHA token found.");
-      }
-    });
-  });
+	var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);
+	elems["ts"] = JSON.stringify(new Date().getTime());
+	document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems);
+    } 
+ } 
+setInterval(timestamp, 500); 
 </script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-	  console.log('submitAction');
-    const form = document.getElementById("event-form");
-
-    form.addEventListener("submit", function (e) { 
-
-      const formData = new FormData(form);
-      console.log("Form submission data:");
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-    });
-  });
-</script>
-<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoadCallback&render=explicit" async defer></script>
+	
 <!--  ----------------------------------------------------------------------  -->
 <!--  NOTE: Please add the following <FORM> element to your page.             -->
 <!--  ----------------------------------------------------------------------  -->
@@ -174,7 +123,7 @@ Message<textarea  id="00NPP000002NJX3" name="00NPP000002NJX3" rows="4" type="tex
 <option value="Website" selected>Website</option>
 </select><br>
 	
-<div id="recaptcha-container" class="g-recaptcha"></div>
+<div class="g-recaptcha" data-sitekey="6LfXkPAqAAAAANq320dZoQxGW-tLW7hVAMiI55Aw"></div><br>
 <input type="submit" name="submit"  id="event-submit-button" disabled>  
 
 </form>
